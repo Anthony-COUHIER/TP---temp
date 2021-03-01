@@ -15,15 +15,18 @@ int getTemp(void)
 
 void decToBinary(unsigned char c)
 {
+    // fonction récupéré sur internet pour ecrire en binaire
     for (unsigned i = 1 << 7; i > 0; i = i / 2)
         (c & i) ? printf("1") : printf("0");
 }
 
 void resultTemp(unsigned char c, unsigned char mode, unsigned char diff)
 {
+    // Permet de faire un OU BINAIRE
     c = mode | diff;
     printf("RESULT : %d, diff : %d\n", c, diff);
     printf("\t%d = 00000000 00000000 00000000 ", c);
+    // Afficher en binaire une valeur
     decToBinary(c);
     printf("\n");
 }
@@ -35,6 +38,8 @@ void onAlarm(void)
     unsigned char diff = 0;
 
     printf("Temp : %d°\n", temp);
+    // permet de récupèrer la différence entre la temperature de
+    // la pièce et la valeur rentrée par l'utilisateur
     if (temp - temp_target == 0) {
         diff = 0;
     } else if (temp - temp_target >= -1 && temp - temp_target <= 1) {
@@ -66,11 +71,16 @@ void handleSigAlarm(int sig)
 
 int main(void)
 {
+    // Initialisation du random, time(0) permet de faire un vrai random
     srand(time(0));
+    // Permet de dire "quand je recoit le signal SIGALARM (envoyé par la fonction alarm)
+    // alors j'execute cette fonction"
     signal(SIGALRM, handleSigAlarm);
 
+    // permet de récupérer la valeur de l'utilisateur
     printf("Enter temp target :");
     scanf("%d", &temp_target);
+    // Init la première alarme
     alarm(ALARM_WAIT);
     while (1);
 }
