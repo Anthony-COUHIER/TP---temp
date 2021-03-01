@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2021
-** temp
-** File description:
-** main
-*/
-
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
