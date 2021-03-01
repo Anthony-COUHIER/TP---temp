@@ -13,11 +13,6 @@
 
 #define ALARM_WAIT 2
 
-void handleSigAlarm(int sig)
-{
-    printf("ALARM\n");
-}
-
 int getTemp(void)
 {
     return rand() % 11 + 15;
@@ -25,7 +20,14 @@ int getTemp(void)
 
 void onAlarm(void)
 {
-    printf("Temp : %d°\n", getTemp());
+    printf("Temp : %d°\n\n", getTemp());
+}
+
+void handleSigAlarm(int sig)
+{
+    alarm(ALARM_WAIT);
+    printf("ALARM\n");
+    onAlarm();
 }
 
 int main(void)
@@ -33,10 +35,8 @@ int main(void)
     srand(time(0));
     signal(SIGALRM, handleSigAlarm);
 
+    alarm(ALARM_WAIT);
+    printf("BEGIN\n\n");
     while (1) {
-        alarm(ALARM_WAIT);
-        sleep(10);
-        onAlarm();
-        printf("\n");
     }
 }
