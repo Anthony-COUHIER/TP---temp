@@ -42,7 +42,9 @@ void onAlarm(void)
     unsigned char diff = 0;
 
     printf("Temp : %d°\n", temp);
-    if (temp - temp_target >= -1 && temp - temp_target <= 1) {
+    if (temp - temp_target == 0) {
+        diff = 0;
+    } else if (temp - temp_target >= -1 && temp - temp_target <= 1) {
         diff = 1;
     } else if (temp - temp_target >= -2 && temp - temp_target <= 2) {
         diff = 2;
